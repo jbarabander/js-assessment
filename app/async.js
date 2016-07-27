@@ -16,9 +16,11 @@ exports.asyncAnswers = {
     // alternative is the longer $.ajax{{url: url, method: 'GET'}}
     return $.get(url)
     .then(function (data) {
-      return data.people.map(function (person) {
+      return data.people
+      .map(function (person) {
         return person.name;
-      }).sort()
+      })
+      .sort();
     });
   }
 };
