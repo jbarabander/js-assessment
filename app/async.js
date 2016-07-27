@@ -2,26 +2,19 @@ exports = typeof window === 'undefined' ? global : window;
 
 exports.asyncAnswers = {
   async: function(value) {
+    // I would prefer to use bluebird here but per the available dependencies
+    // section of the readme looks like I only have access to jquery
+    // I'm assuming this is because these tests are supposed to be run
+    // in the front end
     var deferred = $.Deferred();
-    // if the value is an instance of an error the promise should reject
-    // and should pass the error value to the reject callbacks
-    if (Object.prototype.toString.call(value) === '[object Error]') {
-      setTimeout(function () {
-        deferred.reject(value);
-      }, 50);
-    } else {
-      setTimeout(function () {
-        deferred.resolve(value);
-      }, 50);
-    }
+    setTimeout(function () {
+      deferred.resolve(value);
+    }, 50);
     return deferred.promise();
   },
-
   manipulateRemoteData: function(url) {
-    return $.ajax({
-      url: url,
-      method: 'GET'
-    })
+    // alternative is the longer $.ajax{{url: url, method: 'GET'}}
+    return $.get(url)
     .then(function (data) {
       return data.people.map(function (person) {
         return person.name;
