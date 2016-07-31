@@ -68,7 +68,21 @@ exports.arraysAnswers = {
   },
 
   duplicates: function(arr) {
-
+    var returnArr = [];
+    var checkedValues = [];
+    for (var i = 0; i < arr.length; i++) {
+      var currentItem = arr[i];
+      if (checkedValues.indexOf(currentItem) === -1) {
+        checkedValues.push(currentItem);
+        var numberOfEntries = arr.filter(function (element) {
+          return element === currentItem;
+        }).length;
+        if (numberOfEntries > 1) {
+          returnArr.push(currentItem);
+        }
+      }
+    }
+    return returnArr;
   },
 
   square: function(arr) {
